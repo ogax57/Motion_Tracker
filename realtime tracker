@@ -39,27 +39,8 @@ def transform_array(input_array):
         transformed_num[num] = 1
         transformed_array.append(transformed_num)
     return transformed_array
-DATA_PATH = os.path.join('C:/Users/ilgaz/Desktop/jump')
 # Actions that we try to detect
 actions = np.array(['hello', 'jump ready', 'jumping up', 'thanks'])
-no_sequences = 90
-# Videos are going to be 30 frames in length
-sequence_length = 30
-label_map = {label:num for num, label in enumerate(actions)}
-sequences, labels = [], []
-for action in actions:
-    for sequence in range(no_sequences):
-        window = []
-        for frame_num in range(sequence_length):
-            res = np.load(os.path.join(DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
-            window.append(res)
-        sequences.append(window)
-        labels.append(label_map[action])
-X = np.array(sequences)
-yy = transform_array(labels)
-y = np.array(yy)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.05)
-# Load the saved model
 model_path = 'C:/Users/ilgaz/Desktop/models/jr_ju_h_t.h5'  # Update with your actual model path
 model = tf.keras.models.load_model(model_path)
 label_map = {label: num for num, label in enumerate(actions)}
